@@ -38,8 +38,12 @@ int main() {
 
     }
 
-    printf("Laengstes Palindrom: %s\n", woerter[palindromIndex]);
-    printf("Laenge: %d\n", length);
+    if (palindromIndex != -1) {
+        printf("Laengstes Palindrom: %s\n", woerter[palindromIndex]);
+        printf("Laenge: %d\n", length);
+    } else {
+        printf("Kein Palindrom gefunden\n");
+    }
 
     return 0;
 }
