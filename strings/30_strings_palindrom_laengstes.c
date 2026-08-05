@@ -17,14 +17,29 @@ int main() {
     for (int i = 0; i < 6; i++) {
 
         int counter = 0;
+        int palindrom = 1;
 
         for (int j = 0; woerter[i][j] != '\0'; j++) {
             counter++;
         }
 
-        
+        for (int j = 0; j < counter / 2; j++) {
+
+            if (woerter[i][j] != woerter[i][counter - 1 - j]) {
+                palindrom = 0;
+                break;
+            }
+        }
+
+        if (palindrom == 1 && counter > length) {
+            length = counter;
+            palindromIndex = i;
+        }
 
     }
+
+    printf("Laengstes Palindrom: %s\n", woerter[palindromIndex]);
+    printf("Laenge: %d\n", length);
 
     return 0;
 }
