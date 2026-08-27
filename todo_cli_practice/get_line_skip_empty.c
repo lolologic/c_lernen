@@ -14,8 +14,6 @@ int main(void) {
     }
 
     char *line1 = get_line(f);
-    char *line2 = get_line(f);
-    char *line3 = get_line(f);
 
     if (line1 == NULL) {
 
@@ -23,13 +21,21 @@ int main(void) {
         fclose(f);
         return 1;
 
-    } else if (line2 == NULL) {
+    }
+    
+    char *line2 = get_line(f);
+
+    if (line2 == NULL) {
 
         printf("Speicherfehler.\n");
         fclose(f);
         return 1;
 
-    } else if (line3 == NULL) {
+    }
+    
+    char *line3 = get_line(f);
+
+    if (line3 == NULL) {
 
         printf("Speicherfehler.\n");
         fclose(f);
@@ -65,37 +71,27 @@ char *get_line(FILE *f) {
 
     int c;
 
-    while ((c = fgetc(f)) != EOF) {
+    while ((c = fgetc(f)) != '\n' && c != EOF) {
 
-        count = 0;
+        if (count + 1 >= capacity) {
 
-        while (c != '\n') {
+            int newCapacity = capacity * 2;
+            char *temp = realloc(text, newCapacity * sizeof(char));
 
-            if (count > 0) {
+            if (temp == NULL) {
 
-                int newCapacity = capacity * 2;
-                char *temp = realloc(text, newCapacity * sizeof(char));
-
-                if (temp == NULL) {
-
-                    printf("Speicherfehler.\n");
-                    free(text);
-                    return NULL;
-                }
-
-                text = temp;
-                capacity = newCapacity;
-
-            } else {
-                
-                break;
+                printf("Speicherfehler.\n");
+                free(text);
+                return NULL;
             }
 
-            text[count] = c;
-            count++;
+            text = temp;
+            capacity = newCapacity;
         }
-    }
 
+        text[count] = c;
+        count++;
+    }
 
     text[count] = '\0';
 
